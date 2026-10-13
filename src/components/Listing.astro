@@ -1,0 +1,10 @@
+---
+const {kind,title,empty='De nouvelles offres seront bientôt disponibles.'}=Astro.props;
+---
+<div data-listing={kind} class="cards"><p class="muted" data-empty>{empty}</p></div>
+<script>
+import {db} from '../lib/firebase.js';import {ref,onValue} from 'firebase/database';
+const escapeHTML=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const safeUrl=(s,fallback='#')=>{try{const u=new URL(s,location.origin);return ['http:','https:'].includes(u.protocol)?u.href:fallback}catch{return fallback}};
+for(const el of document.querySelectorAll('[data-listing]')) {let kind=el.dataset.listing;onValue(ref(db,'public/'+kind),snap=>{const records=Object.entries(snap.val()||{}).map(([id,v])=>({id,...v})).filter(x=>x.published!==false).sort((a,b)=>String(b.date||b.createdAt||'').localeCompare(String(a.date||a.createdAt||'')));el.replaceChildren();if(!records.length){el.innerHTML='<p class="muted">De nouvelles offres seront bientôt disponibles.</p>';return;}for(const x of records){const card=document.createElement('article');card.className='travel-card';const img=safeUrl(x.image,'');if(img){let im=document.createElement('img');im.loading='lazy';im.src=img;im.alt=x.title||'Walid Voyages';card.append(im);}const body=document.createElement('div');body.className='travel-card-body';const h=document.createElement('h3');h.textContent=x.title||x.name||'Walid Voyages';body.append(h);const p=document.createElement('p');p.textContent=x.summary||x.description||x.city||'';body.append(p);if(x.price){const pr=document.createElement('strong');pr.className='price';pr.textContent=String(x.price)+' DT';body.append(pr)}const a=document.createElement('a');a.className='link-btn';a.href=safeUrl(x.bookingUrl||x.url,'https://www.walid-voyages.com');a.target='_blank';a.rel='noopener';a.textContent=kind==='articles'?'Lire / en savoir plus ↗':'Découvrir / réserver ↗';body.append(a);card.append(body);el.append(card);}} ,()=>{el.innerHTML='<p class="muted">Contenu momentanément indisponible.</p>'})}
+</script>

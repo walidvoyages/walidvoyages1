@@ -1,0 +1,7 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import {loadCollection,slugify} from '../../lib/content.mjs';
+export async function getStaticPaths(){const items=await loadCollection('articles');return items.map(article=>({params:{slug:slugify(article.slug||article.title||article.id)},props:{article}}))}
+const {article}=Astro.props;
+---
+<Layout title={article.seoTitle||article.title+' | Walid Voyages'} description={article.seoDescription||article.summary||''}><section class="inner-hero"><div class="container"><span class="eyebrow dark">ACTUALITÉS · WALID VOYAGES</span><h1>{article.title}</h1><p>{article.summary}</p></div></section><article class="container section" style="max-width:850px"><img src={article.image} alt={article.title} style="width:100%;border-radius:18px;max-height:450px;object-fit:cover" loading="lazy"/><div style="white-space:pre-wrap;line-height:2;font-size:17px;margin-top:30px">{article.body}</div><a href="/actualites/" class="text-link">← Toutes les actualités</a></article></Layout>

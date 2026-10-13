@@ -1,0 +1,1 @@
+{"name":"walidvoyages-2026","version":"1.0.0","type":"module","scripts":{"dev":"astro dev --host 0.0.0.0","build":"astro build","preview":"astro preview"},"dependencies":{"@astrojs/sitemap":"^3.5.1","astro":"^5.15.0","firebase":"^12.3.0","lucide":"^0.468.0"},"devDependencies":{}}

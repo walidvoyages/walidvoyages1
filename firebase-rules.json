@@ -1,0 +1,18 @@
+{
+ "rules": {
+  ".read": false,
+  ".write": false,
+  "admins": {
+   ".read": "auth != null && auth.uid === 'LbAdOIWphiaJH9TAqzPyKKadiXk2'",
+   ".write": false
+  },
+  "public": {
+   ".read": true,
+   ".write": "auth != null && auth.uid === 'LbAdOIWphiaJH9TAqzPyKKadiXk2' && root.child('admins').child(auth.uid).val() === 'admin'"
+  },
+  "drafts": {
+   ".read": "auth != null && auth.uid === 'LbAdOIWphiaJH9TAqzPyKKadiXk2' && root.child('admins').child(auth.uid).val() === 'admin'",
+   ".write": "auth != null && auth.uid === 'LbAdOIWphiaJH9TAqzPyKKadiXk2' && root.child('admins').child(auth.uid).val() === 'admin'"
+  }
+ }
+}

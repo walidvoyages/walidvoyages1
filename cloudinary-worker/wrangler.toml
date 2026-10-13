@@ -1,0 +1,10 @@
+name = "walid-cloudinary-sign"
+main = "worker.js"
+compatibility_date = "2025-10-01"
+[vars]
+CLOUD_NAME = "xvncs8ud"
+CLOUD_API_KEY = "451279223484529"
+FIREBASE_PROJECT_ID = "walidvoyages-13332"
+ADMIN_UID = "LbAdOIWphiaJH9TAqzPyKKadiXk2"
+ALLOWED_ORIGIN = "https://www.walidvoyages.com"
+# Set CLOUD_API_SECRET with: npx wrangler secret put CLOUD_API_SECRET
